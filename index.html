@@ -1,0 +1,1208 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portal de Retenção - IR e ISSQN | Porto Velho/RO</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        :root {
+            --primary: #1e3a8a;
+            --secondary: #3b82f6;
+            --accent: #10b981;
+            --danger: #ef4444;
+            --warning: #f59e0b;
+            --dark: #1f2937;
+            --light: #f3f4f6;
+            --white: #ffffff;
+            --shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--dark);
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            background: var(--white);
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            animation: slideDown 0.5s ease;
+        }
+        
+        @keyframes slideDown {
+            from { transform: translateY(-100%); }
+            to { transform: translateY(0); }
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+        
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 2rem;
+        }
+        
+        nav a {
+            text-decoration: none;
+            color: var(--dark);
+            font-weight: 500;
+            transition: color 0.3s;
+            position: relative;
+        }
+        
+        nav a:hover {
+            color: var(--secondary);
+        }
+        
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--secondary);
+            transition: width 0.3s;
+        }
+        
+        nav a:hover::after {
+            width: 100%;
+        }
+        
+        .hero {
+            background: var(--white);
+            border-radius: 20px;
+            padding: 3rem;
+            margin: 2rem 0;
+            box-shadow: var(--shadow);
+            animation: fadeIn 0.8s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .hero h1 {
+            color: var(--primary);
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .hero-icon {
+            font-size: 3rem;
+        }
+        
+        .content-section {
+            background: var(--white);
+            border-radius: 20px;
+            padding: 2rem;
+            margin: 2rem 0;
+            box-shadow: var(--shadow);
+            display: none;
+            animation: slideIn 0.5s ease;
+        }
+        
+        .content-section.active {
+            display: block;
+        }
+        
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(-20px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+        
+        .section-title {
+            color: var(--primary);
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 3px solid var(--secondary);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+        
+        .card {
+            background: linear-gradient(135deg, var(--light) 0%, var(--white) 100%);
+            border-radius: 15px;
+            padding: 1.5rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            transition: transform 0.3s, box-shadow 0.3s, opacity 0.3s;
+            cursor: pointer;
+        }
+        
+        #ir-card {
+            transition: all 0.4s ease;
+        }
+        
+        #ir-card[style*="display: none"] {
+            opacity: 0;
+            transform: scale(0.8);
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        }
+        
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+        
+        .card-icon {
+            width: 50px;
+            height: 50px;
+            background: var(--secondary);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+        }
+        
+        .card h3 {
+            color: var(--primary);
+            font-size: 1.2rem;
+        }
+        
+        .step-container {
+            background: var(--light);
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+        }
+        
+        .step {
+            display: flex;
+            align-items: flex-start;
+            margin: 1rem 0;
+            padding: 1rem;
+            background: var(--white);
+            border-radius: 10px;
+            transition: transform 0.3s;
+        }
+        
+        .step:hover {
+            transform: translateX(5px);
+        }
+        
+        .step-number {
+            min-width: 35px;
+            height: 35px;
+            background: var(--accent);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            margin-right: 1rem;
+        }
+        
+        .alert {
+            padding: 1rem 1.5rem;
+            border-radius: 10px;
+            margin: 1rem 0;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.02); }
+        }
+        
+        .alert-warning {
+            background: #fef3c7;
+            border-left: 4px solid var(--warning);
+            color: #92400e;
+        }
+        
+        .alert-danger {
+            background: #fee2e2;
+            border-left: 4px solid var(--danger);
+            color: #991b1b;
+        }
+        
+        .alert-info {
+            background: #dbeafe;
+            border-left: 4px solid var(--secondary);
+            color: #1e40af;
+        }
+        
+        .link-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: var(--secondary);
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border-radius: 8px;
+            text-decoration: none;
+            transition: all 0.3s;
+            margin: 0.5rem 0;
+        }
+        
+        .link-button:hover {
+            background: var(--primary);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        
+        .accordion {
+            margin: 1rem 0;
+        }
+        
+        .accordion-header {
+            background: var(--light);
+            padding: 1rem 1.5rem;
+            border-radius: 10px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background 0.3s;
+        }
+        
+        .accordion-header:hover {
+            background: #e5e7eb;
+        }
+        
+        .accordion-content {
+            padding: 0 1.5rem;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease, padding 0.3s ease;
+        }
+        
+        .accordion-content.active {
+            padding: 1rem 1.5rem;
+            max-height: 2000px;
+        }
+        
+        .legal-text {
+            background: #f9fafb;
+            border-left: 4px solid var(--primary);
+            padding: 1.5rem;
+            margin: 1rem 0;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            line-height: 1.8;
+        }
+        
+        .legal-article {
+            margin: 1.5rem 0;
+        }
+        
+        .legal-article h4 {
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+        
+        .legal-item {
+            margin: 0.5rem 0;
+            padding-left: 2rem;
+            position: relative;
+        }
+        
+        .legal-item::before {
+            content: "▸";
+            position: absolute;
+            left: 0.5rem;
+            color: var(--secondary);
+        }
+        
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+        }
+        
+        .hamburger span {
+            width: 25px;
+            height: 3px;
+            background: var(--primary);
+            margin: 3px 0;
+            transition: 0.3s;
+        }
+        
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 1.8rem;
+            }
+            
+            nav ul {
+                position: fixed;
+                top: 70px;
+                right: -100%;
+                background: white;
+                flex-direction: column;
+                padding: 2rem;
+                box-shadow: var(--shadow);
+                transition: right 0.3s;
+            }
+            
+            nav ul.active {
+                right: 0;
+            }
+            
+            .hamburger {
+                display: flex;
+            }
+            
+            .card-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .floating-help {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 60px;
+            height: 60px;
+            background: var(--accent);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+            transition: transform 0.3s;
+            animation: float 3s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        .floating-help:hover {
+            transform: scale(1.1);
+        }
+        
+        .selection-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 3rem;
+            margin: 2rem 0;
+        }
+        
+        .selection-card {
+            background: linear-gradient(145deg, #ffffff 0%, #f3f4f6 100%);
+            border-radius: 20px;
+            padding: 2.5rem;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            cursor: pointer;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .selection-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, var(--secondary) 0%, var(--accent) 100%);
+            transform: scaleX(0);
+            transition: transform 0.4s ease;
+        }
+        
+        .selection-card:hover::before {
+            transform: scaleX(1);
+        }
+        
+        .selection-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+        }
+        
+        .selection-icon {
+            font-size: 4rem;
+            text-align: center;
+            margin-bottom: 1.5rem;
+            animation: float 3s ease-in-out infinite;
+        }
+        
+        .selection-card h3 {
+            color: #6b7280;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 0.5rem;
+        }
+        
+        .selection-card h2 {
+            color: var(--primary);
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+        }
+        
+        .selection-card p {
+            color: #4b5563;
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+        
+        .selection-list {
+            list-style: none;
+            margin: 1.5rem 0;
+        }
+        
+        .selection-list li {
+            padding: 0.5rem 0;
+            color: #6b7280;
+            position: relative;
+            padding-left: 1.5rem;
+        }
+        
+        .selection-list li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: var(--accent);
+            font-weight: bold;
+        }
+        
+        .selection-button {
+            background: linear-gradient(135deg, var(--secondary) 0%, var(--primary) 100%);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 10px;
+            text-align: center;
+            font-weight: bold;
+            margin-top: 2rem;
+            transition: all 0.3s ease;
+        }
+        
+        .selection-card:hover .selection-button {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            transform: translateX(5px);
+        }
+        
+        @media (max-width: 768px) {
+            .selection-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+            
+            .selection-card {
+                padding: 2rem;
+            }
+            
+            .selection-icon {
+                font-size: 3rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <div class="logo">
+                <div class="logo-icon">PV</div>
+                <h2>Portal de Retenção Tributária</h2>
+            </div>
+            <nav>
+                <ul id="navMenu">
+                    <li><a href="#" onclick="showSection('selection')">🏠 Início</a></li>
+                    <li><a href="#" onclick="showSection('home')">📋 Portal</a></li>
+                    <li id="ir-menu-item"><a href="#" onclick="showSection('ir')">💰 IR Retido</a></li>
+                    <li><a href="#" onclick="showSection('iss')">📋 ISS Retido</a></li>
+                    <li><a href="#" onclick="showSection('legal')">⚖️ Base Legal</a></li>
+                    <li><a href="#" onclick="showSection('help')">❓ Ajuda</a></li>
+                </ul>
+                <div class="hamburger" onclick="toggleMenu()">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </nav>
+        </div>
+    </header>
+    
+    <div class="container">
+        <!-- Seção de Seleção Inicial -->
+        <div id="selection" class="content-section active">
+            <div class="hero">
+                <h1><span class="hero-icon">🏛️</span> Portal de Orientação Tributária</h1>
+                <p style="font-size: 1.2rem; color: #4b5563; margin-bottom: 2rem;">
+                    Bem-vindo ao Portal de Orientação para Retenção de IR e ISSQN do Município de Porto Velho/RO. 
+                    Aqui você encontrará todas as informações necessárias para realizar corretamente os procedimentos de retenção tributária.
+                </p>
+                
+                <div class="alert alert-info">
+                    <span style="font-size: 1.5rem;">ℹ️</span>
+                    <div>
+                        <strong>Importante:</strong> Para acessar os sistemas, você receberá um usuário e senha específicos via e-mail institucional. 
+                        Use sempre o CPF com formatação completa (XXX.XXX.XXX-XX).
+                    </div>
+                </div>
+                
+                <h2 style="text-align: center; color: var(--primary); margin: 3rem 0 2rem 0; font-size: 1.5rem;">
+                    Selecione o tipo de Substituto Tributário:
+                </h2>
+                
+                <div class="selection-grid">
+                    <div class="selection-card" onclick="showPortal('orgaos')">
+                        <div class="selection-icon">🏢</div>
+                        <h3>Substitutos Tributários</h3>
+                        <h2>Órgãos Públicos</h2>
+                        <p>Administração direta e indireta da União, Estados, Distrito Federal e Municípios</p>
+                        <ul class="selection-list">
+                            <li>Autarquias</li>
+                            <li>Empresas Públicas</li>
+                            <li>Sociedades de Economia Mista</li>
+                            <li>Fundações Públicas</li>
+                            <li>Agências Reguladoras</li>
+                        </ul>
+                        <div class="selection-button">Acessar Portal →</div>
+                    </div>
+                    
+                    <div class="selection-card" onclick="showPortal('demais')">
+                        <div class="selection-icon">🏗️</div>
+                        <h3>Substitutos Tributários</h3>
+                        <h2>Demais</h2>
+                        <p>Outras entidades obrigadas à retenção conforme LC 878/21</p>
+                        <ul class="selection-list">
+                            <li>Instituições Financeiras</li>
+                            <li>Hospitais e Planos de Saúde</li>
+                            <li>Concessionárias de Serviços Públicos</li>
+                            <li>Seguradoras e Operadoras de Cartão</li>
+                            <li>Demais responsáveis por substituição</li>
+                        </ul>
+                        <div class="selection-button">Acessar Portal →</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Seção Principal (Antiga Home) -->
+        <div id="home" class="content-section">
+            <div class="hero">
+                <h1><span class="hero-icon">🏛️</span> Portal de Orientação Tributária</h1>
+                <p id="portal-description" style="font-size: 1.2rem; color: #4b5563; margin-bottom: 1rem;">
+                    Portal de Orientação para Retenção de IR e ISSQN do Município de Porto Velho/RO
+                </p>
+                <div id="portal-type-badge" style="display: inline-block; background: var(--secondary); color: white; padding: 0.5rem 1rem; border-radius: 20px; font-size: 0.9rem; margin-bottom: 2rem; transition: all 0.3s ease;">
+                    📍 Órgãos Públicos
+                </div>
+                
+                <div class="card-grid">
+                    <div class="card" id="ir-card" onclick="showSection('ir')">
+                        <div class="card-header">
+                            <div class="card-icon">💵</div>
+                            <h3>Emissão de DAM - IR Retido</h3>
+                        </div>
+                        <p>Acesse o passo a passo completo para emitir o Documento de Arrecadação Municipal do Imposto de Renda Retido na Fonte.</p>
+                        <a href="#" class="link-button">Acessar Orientações →</a>
+                    </div>
+                    
+                    <div class="card" onclick="showSection('iss')">
+                        <div class="card-header">
+                            <div class="card-icon">📊</div>
+                            <h3>Emissão de DAM - ISS Retido</h3>
+                        </div>
+                        <p>Saiba como proceder para emitir o DAM do ISS Retido, tanto para notas de Porto Velho quanto de outros municípios.</p>
+                        <a href="#" class="link-button">Acessar Orientações →</a>
+                    </div>
+                    
+                    <div class="card" onclick="showSection('legal')">
+                        <div class="card-header">
+                            <div class="card-icon">📚</div>
+                            <h3>Legislação Aplicável</h3>
+                        </div>
+                        <p>Consulte a base legal completa sobre substituição tributária conforme LC 878/21 do Município de Porto Velho.</p>
+                        <a href="#" class="link-button">Consultar Legislação →</a>
+                    </div>
+                </div>
+                
+                <div style="text-align: center; margin-top: 2rem;">
+                    <button onclick="showSection('selection')" style="background: var(--light); color: var(--dark); padding: 0.8rem 2rem; border: none; border-radius: 8px; cursor: pointer; font-size: 1rem; transition: all 0.3s;">
+                        ← Voltar à Seleção Inicial
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Seção IR Retido -->
+        <div id="ir" class="content-section">
+            <h2 class="section-title">💰 Emissão de DAM - Imposto de Renda Retido</h2>
+            
+            <div class="alert alert-info">
+                <span style="font-size: 1.5rem;">🔗</span>
+                <div>
+                    <strong>Sistema de Acesso:</strong><br>
+                    <a href="https://gpi-trb.portovelho.ro.gov.br/" target="_blank" class="link-button">
+                        🌐 Acessar Sistema GPI-TRB
+                    </a>
+                </div>
+            </div>
+            
+            <div class="step-container">
+                <h3 style="color: var(--primary); margin-bottom: 1rem;">📝 Passo a Passo para Emissão</h3>
+                
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <div>
+                        <strong>Acesse o Menu Principal</strong><br>
+                        Navegue até: <code>Taxas > Movimentação de Tributos > Lançamento de Tributos</code>
+                    </div>
+                </div>
+                
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <div>
+                        <strong>Inicie um Novo Lançamento</strong><br>
+                        Clique no botão azul "+Novo" para criar um novo lançamento.
+                    </div>
+                </div>
+                
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <div>
+                        <strong>Preencha os Dados do Contribuinte</strong><br>
+                        No campo "Contribuinte", pesquise pelo nome ou CPF/CNPJ (com formatação completa).
+                    </div>
+                </div>
+                
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <div>
+                        <strong>Informe o Processo</strong><br>
+                        Digite o número do processo administrativo relacionado à retenção.
+                    </div>
+                </div>
+                
+                <div class="step">
+                    <div class="step-number">5</div>
+                    <div>
+                        <strong>Adicione Observações</strong><br>
+                        Inclua os números das Notas Fiscais e o número do empenho.
+                    </div>
+                </div>
+                
+                <div class="step">
+                    <div class="step-number">6</div>
+                    <div>
+                        <strong>Selecione o Tributo</strong><br>
+                        Use o código: <code>001.000001.000000582 IRRF – FORNECEDORES</code>
+                    </div>
+                </div>
+                
+                <div class="step">
+                    <div class="step-number">7</div>
+                    <div>
+                        <strong>Informe o Valor</strong><br>
+                        No campo "Fator", digite o valor a ser recolhido e clique em "+Adicionar".
+                    </div>
+                </div>
+                
+                <div class="step">
+                    <div class="step-number">8</div>
+                    <div>
+                        <strong>Salve e Gere a Guia</strong><br>
+                        Clique em "Salvar", depois em "Gerar guia". O boleto ficará disponível para impressão.
+                    </div>
+                </div>
+                
+                <div class="step">
+                    <div class="step-number">9</div>
+                    <div>
+                        <strong>Gere o PDF</strong><br>
+                        Exporte o documento em PDF para inserção no sistema e-TCDF (e-PMPV).
+                    </div>
+                </div>
+            </div>
+            
+            <div class="alert alert-warning">
+                <span style="font-size: 1.5rem;">⚠️</span>
+                <div>
+                    <strong>Observação Importante:</strong><br>
+                    Até nova orientação, continua sendo obrigatório o lançamento da Retenção do Imposto de Renda no Sistema CIRF, pelo menos até o final de Dezembro/2023.
+                </div>
+            </div>
+        </div>
+        
+        <!-- Seção ISS Retido -->
+        <div id="iss" class="content-section">
+            <h2 class="section-title">📋 Emissão de DAM - ISS Retido</h2>
+            
+            <div class="alert alert-info">
+                <span style="font-size: 1.5rem;">🔗</span>
+                <div>
+                    <strong>Sistema de Acesso:</strong><br>
+                    <a href="https://nfse.portovelho.ro.gov.br/ServerExec/acessoBase/#/login" target="_blank" class="link-button">
+                        🌐 Acessar Sistema NFS-e
+                    </a>
+                </div>
+            </div>
+            
+            <div class="accordion">
+                <div class="accordion-header" onclick="toggleAccordion(this)">
+                    <h3>📍 Notas Fiscais de Porto Velho</h3>
+                    <span>▼</span>
+                </div>
+                <div class="accordion-content">
+                    <div class="step-container">
+                        <div class="step">
+                            <div class="step-number">1</div>
+                            <div>
+                                <strong>Acesse o Menu</strong><br>
+                                Navegue até: <code>Substituição Tributária > Declaração</code>
+                            </div>
+                        </div>
+                        
+                        <div class="step">
+                            <div class="step-number">2</div>
+                            <div>
+                                <strong>Selecione a Competência</strong><br>
+                                Se necessário, altere o mês/ano para corresponder à NF.
+                            </div>
+                        </div>
+                        
+                        <div class="step">
+                            <div class="step-number">3</div>
+                            <div>
+                                <strong>Localize a Nota Fiscal</strong><br>
+                                Use o campo "Filtrar" para encontrar a NF desejada.
+                            </div>
+                        </div>
+                        
+                        <div class="step">
+                            <div class="step-number">4</div>
+                            <div>
+                                <strong>Declare a NF</strong><br>
+                                Selecione a nota e clique em "Declarar".
+                            </div>
+                        </div>
+                        
+                        <div class="step">
+                            <div class="step-number">5</div>
+                            <div>
+                                <strong>Encerre a Declaração</strong><br>
+                                Clique em "Encerrar Declaração". A linha ficará verde.
+                            </div>
+                        </div>
+                        
+                        <div class="step">
+                            <div class="step-number">6</div>
+                            <div>
+                                <strong>Imprima o Boleto</strong><br>
+                                Clique em "Impressão Boleto(s)" e gere o PDF.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="accordion">
+                <div class="accordion-header" onclick="toggleAccordion(this)">
+                    <h3>🌐 Notas Fiscais de Outros Municípios</h3>
+                    <span>▼</span>
+                </div>
+                <div class="accordion-content">
+                    <div class="alert alert-danger">
+                        <span style="font-size: 1.5rem;">❗</span>
+                        <div>
+                            <strong>IMPORTANTE!</strong><br>
+                            Prestadores de outros municípios devem realizar credenciamento prévio para cadastrar suas NFs.
+                        </div>
+                    </div>
+                    
+                    <h4 style="color: var(--primary); margin: 1rem 0;">👤 Para o Prestador - Credenciamento:</h4>
+                    <div class="step-container">
+                        <div class="step">
+                            <div class="step-number">1</div>
+                            <div>
+                                <strong>Acesse "Credenciamentos"</strong><br>
+                                Na tela inicial do sistema, clique na aba "Credenciamentos".
+                            </div>
+                        </div>
+                        
+                        <div class="step">
+                            <div class="step-number">2</div>
+                            <div>
+                                <strong>Selecione o Tipo</strong><br>
+                                Escolha "Pessoa Jurídica" e em "Pertence ao município" marque: NÃO.
+                            </div>
+                        </div>
+                        
+                        <div class="step">
+                            <div class="step-number">3</div>
+                            <div>
+                                <strong>Informe o CNPJ</strong><br>
+                                Digite o CNPJ e clique em "Avançar".
+                            </div>
+                        </div>
+                        
+                        <div class="step">
+                            <div class="step-number">4</div>
+                            <div>
+                                <strong>Complete o Cadastro</strong><br>
+                                Preencha os dados da empresa, crie uma senha e solicite o credenciamento.
+                            </div>
+                        </div>
+                        
+                        <div class="step">
+                            <div class="step-number">5</div>
+                            <div>
+                                <strong>Vincule Usuários</strong><br>
+                                Cadastre o CPF dos responsáveis pelos lançamentos.
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <h4 style="color: var(--primary); margin: 1rem 0;">📝 Para Cadastrar a NF:</h4>
+                    <div class="step-container">
+                        <div class="step">
+                            <div class="step-number">1</div>
+                            <div>
+                                <strong>Acesse com CPF/Senha</strong><br>
+                                Entre no sistema usando suas credenciais.
+                            </div>
+                        </div>
+                        
+                        <div class="step">
+                            <div class="step-number">2</div>
+                            <div>
+                                <strong>Acesse DAPS > Emissão</strong><br>
+                                Selecione "Prestador" no tipo de emissão.
+                            </div>
+                        </div>
+                        
+                        <div class="step">
+                            <div class="step-number">3</div>
+                            <div>
+                                <strong>Cadastre o Tomador</strong><br>
+                                Se necessário, adicione o Município de Porto Velho como tomador.
+                            </div>
+                        </div>
+                        
+                        <div class="step">
+                            <div class="step-number">4</div>
+                            <div>
+                                <strong>Preencha os Dados</strong><br>
+                                Complete as informações conforme a NF do prestador.
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="alert alert-info">
+                        <span style="font-size: 1.5rem;">✅</span>
+                        <div>
+                            <strong>Para Servidores da PMPV:</strong><br>
+                            Após o cadastro pelo prestador, a NF ficará disponível no mesmo menu das notas de Porto Velho. 
+                            Siga o procedimento padrão em: Substituição Tributária > Declaração.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Seção Base Legal -->
+        <div id="legal" class="content-section">
+            <h2 class="section-title">⚖️ Base Legal - LC 878/21</h2>
+            
+            <div class="legal-text">
+                <h3 style="color: var(--primary); margin-bottom: 1rem;">
+                    <a href="https://sapl.portovelho.ro.leg.br/norma/14805?display" target="_blank" style="color: var(--primary); text-decoration: none; transition: all 0.3s; display: inline-flex; align-items: center; gap: 0.5rem;" onmouseover="this.style.color='#3b82f6'; this.style.textDecoration='underline'" onmouseout="this.style.color='#1e3a8a'; this.style.textDecoration='none'">
+                        Lei Complementar nº 878/2021 - Código Tributário e de Rendas de Porto Velho/RO 
+                        <span style="font-size: 0.9rem; color: var(--secondary);">↗️</span>
+                    </a>
+                </h3>
+                <p style="font-weight: bold; margin-bottom: 1rem;">Dos Responsáveis por Substituição</p>
+            </div>
+            
+            <div class="legal-article">
+                <h4>Art. 264 - Responsáveis por Substituição Tributária</h4>
+                <p style="margin: 1rem 0;">
+                    São responsáveis por substituição os tomadores e intermediários dos serviços dispostos na Lista de Serviços, 
+                    ainda que imune ou isento, em relação aos serviços tomados ou intermediados, obrigados à retenção e ao 
+                    recolhimento do ISSQN, inclusive multa e acréscimos legais, independentemente de ter sido efetuada sua 
+                    retenção na fonte:
+                </p>
+                
+                <div class="legal-item">
+                    <strong>I –</strong> O tomador ou intermediário dos serviços provenientes do exterior do País ou cuja prestação se tenha iniciado no exterior do País;
+                </div>
+                
+                <div class="legal-item">
+                    <strong>II –</strong> Os órgãos da administração direta da União, dos Estados, do Distrito Federal e dos Municípios, bem como suas autarquias, empresas públicas, sociedades de economia mista, fundações instituídas e mantidas pelo poder público e agências reguladora, sediadas e que desenvolvam atividades no âmbito do município de Porto Velho;
+                </div>
+                
+                <div class="legal-item">
+                    <strong>III –</strong> Os estabelecimentos bancários e demais entidades financeiras autorizadas a funcionar pelo Banco Central do Brasil;
+                </div>
+                
+                <div class="legal-item">
+                    <strong>IV –</strong> O promotor ou intermediário de eventos;
+                </div>
+                
+                <div class="legal-item">
+                    <strong>V –</strong> As sociedades que explorem e/ou administrem serviços de planos de medicina de grupo ou individual, de convênios ou de outros planos de saúde, bem como de administradoras de títulos de capitalização e de previdência privada;
+                </div>
+                
+                <div class="legal-item">
+                    <strong>VI –</strong> A Caixa Econômica Federal, quando resulte em remunerações ou comissões, por ela pagas à Rede de Casas Lotéricas e de Venda de Bilhetes estabelecidas no Município de Porto Velho;
+                </div>
+                
+                <div class="legal-item">
+                    <strong>VII –</strong> Os hospitais;
+                </div>
+                
+                <div class="legal-item">
+                    <strong>VIII –</strong> As entidades instituídas na forma de serviço social autônomo;
+                </div>
+                
+                <div class="legal-item">
+                    <strong>IX –</strong> As concessionárias, permissionárias ou autorizadas de serviços públicos;
+                </div>
+                
+                <div class="legal-item">
+                    <strong>X –</strong> As pessoas físicas tomadoras dos serviços de construção civil especificados nos subitens 7.02, 7.04 e 7.05, da Lista de Serviços, cujo prestador seja pessoa física;
+                </div>
+                
+                <div class="legal-item">
+                    <strong>XI –</strong> As agências de propaganda e publicidade e de sociedades que explorem os serviços de rádio, jornal e televisão;
+                </div>
+                
+                <div class="legal-item">
+                    <strong>XII –</strong> As sociedades seguradoras e de capitalização, operadoras de cartões de crédito ou débito, administradora de consórcios e administradoras de benefícios;
+                </div>
+                
+                <div class="legal-item">
+                    <strong>XIII –</strong> A pessoa jurídica estabelecida ou não em Porto Velho, que tomar ou intermediar os serviços descritos nos subitens 3.05, 7.02, 7.04, 7.05, 7.09, 7.10, 7.12, 7.16, 7.17, 7.19, 11.02, 17.05 e 17.10 da Lista de Serviços, quando prestados por pessoa não estabelecida no Município.
+                </div>
+            </div>
+            
+            <div class="legal-article">
+                <h4>Parágrafos do Art. 264</h4>
+                
+                <div class="legal-item">
+                    <strong>§ 1º</strong> O responsável de que trata o caput deste artigo, ao efetuar a retenção e recolhimento do valor do imposto, deverá fornecer comprovante ao prestador do serviço, cuja responsabilidade fora excluída por força da substituição, sempre que solicitado.
+                </div>
+                
+                <div class="legal-item">
+                    <strong>§ 2º</strong> Os tomadores ou intermediários dos serviços descritos neste artigo, ficam desobrigados de atuarem como substitutos tributários quando se tratar de contratação ou intermediação dos serviços, tendo como prestadores instituições financeiras autorizadas a funcionar pelo Banco Central do Brasil, Sociedades de Profissionais, Profissionais Autônomos, prestadores que gozem de isenção ou imunidade, bem como Microempreendedores Individuais (MEI).
+                </div>
+                
+                <div class="legal-item">
+                    <strong>§ 3º</strong> Será afastada a responsabilidade tributária prevista no caput deste artigo, quando os substitutos tributários sejam caracterizados pela Administração Tributária como devedores contumazes, em conformidade com os critérios definidos em Regulamento, sem prejuízo da aplicação de sanções administrativas, civis e penais.
+                </div>
+                
+                <div class="legal-item">
+                    <strong>§ 4º</strong> Quando o prestador der causa a recolhimento do ISSQN em valor inferior ao devido, este responderá pelos valores não recolhidos pelo substituto tributário, acrescidos de juros, multas e demais encargos incidentes, sem prejuízo da aplicação de outras sanções de ordem administrativa ou penal.
+                </div>
+                
+                <div class="legal-item">
+                    <strong>§ 5º</strong> As credenciadoras ou emissoras de cartões de crédito e débito são responsáveis pelo imposto devido pelas bandeiras de cartão, em decorrência dos serviços prestados na forma do subitem 15.01 da Lista de Serviços.
+                </div>
+            </div>
+        </div>
+        
+        <!-- Seção Ajuda -->
+        <div id="help" class="content-section">
+            <h2 class="section-title">❓ Dúvidas Frequentes</h2>
+            
+            <div class="accordion">
+                <div class="accordion-header" onclick="toggleAccordion(this)">
+                    <h3>Como obtenho minhas credenciais de acesso?</h3>
+                    <span>▼</span>
+                </div>
+                <div class="accordion-content">
+                    <p>As credenciais (usuário e senha) são enviadas automaticamente para seu e-mail institucional. Caso não tenha recebido, entre em contato com o setor de TI ou com a administração tributária.</p>
+                </div>
+            </div>
+            
+            <div class="accordion">
+                <div class="accordion-header" onclick="toggleAccordion(this)">
+                    <h3>Qual o prazo de vencimento do DAM?</h3>
+                    <span>▼</span>
+                </div>
+                <div class="accordion-content">
+                    <p>Para o IR Retido, o vencimento é configurado automaticamente para 30 dias após o lançamento. Para o ISS, a data de vencimento é definida de acordo com a configuração do sistema, podendo ser ajustada conforme necessário.</p>
+                </div>
+            </div>
+            
+            <div class="accordion">
+                <div class="accordion-header" onclick="toggleAccordion(this)">
+                    <h3>Como proceder com notas de outros municípios?</h3>
+                    <span>▼</span>
+                </div>
+                <div class="accordion-content">
+                    <p>O prestador de outro município deve primeiro realizar o credenciamento no sistema e cadastrar suas notas fiscais. Após isso, as NFs ficarão disponíveis para os servidores da PMPV emitirem o DAM no mesmo menu das notas de Porto Velho.</p>
+                </div>
+            </div>
+            
+            <div class="accordion">
+                <div class="accordion-header" onclick="toggleAccordion(this)">
+                    <h3>Quem está obrigado à retenção?</h3>
+                    <span>▼</span>
+                </div>
+                <div class="accordion-content">
+                    <p>Conforme o Art. 264 da LC 878/21, estão obrigados à retenção os tomadores e intermediários listados nos incisos I a XIII, incluindo órgãos públicos, instituições financeiras, hospitais, entre outros. Consulte a seção "Base Legal" para a lista completa.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="floating-help" onclick="showSection('help')" title="Precisa de ajuda?">
+        ?
+    </div>
+    
+    <script>
+        let currentPortalType = 'orgaos'; // Tipo de portal atual
+        
+        function showPortal(type) {
+            currentPortalType = type;
+            
+            // Atualiza o texto do portal baseado no tipo
+            const description = document.getElementById('portal-description');
+            const irCard = document.getElementById('ir-card');
+            const irMenuItem = document.getElementById('ir-menu-item');
+            const typeBadge = document.getElementById('portal-type-badge');
+            
+            if (type === 'demais') {
+                // Para "Demais", remove IR do texto, esconde o card e o item do menu
+                description.textContent = 'Portal de Orientação para Retenção de ISSQN do Município de Porto Velho/RO';
+                irCard.style.display = 'none';
+                irMenuItem.style.display = 'none';
+                typeBadge.innerHTML = '🏗️ Demais Substitutos Tributários';
+                typeBadge.style.background = '#10b981'; // Verde para diferenciar
+            } else {
+                // Para "Órgãos Públicos", mostra tudo
+                description.textContent = 'Portal de Orientação para Retenção de IR e ISSQN do Município de Porto Velho/RO';
+                irCard.style.display = 'block';
+                irMenuItem.style.display = 'list-item';
+                typeBadge.innerHTML = '🏢 Órgãos Públicos';
+                typeBadge.style.background = '#3b82f6'; // Azul
+            }
+            
+            // Mostra a seção home
+            showSection('home');
+        }
+        
+        function showSection(sectionId) {
+            // Esconde todas as seções
+            document.querySelectorAll('.content-section').forEach(section => {
+                section.classList.remove('active');
+            });
+            
+            // Mostra a seção selecionada
+            document.getElementById(sectionId).classList.add('active');
+            
+            // Fecha o menu mobile se estiver aberto
+            document.getElementById('navMenu').classList.remove('active');
+            
+            // Scroll suave para o topo
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            
+            // Se está indo para home a partir da seleção, adiciona uma animação especial
+            if (sectionId === 'home') {
+                const homeSection = document.getElementById('home');
+                homeSection.style.animation = 'slideIn 0.5s ease';
+            }
+            
+            // Se voltou para seleção, reseta o tipo
+            if (sectionId === 'selection') {
+                currentPortalType = 'orgaos';
+            }
+        }
+        
+        function toggleMenu() {
+            document.getElementById('navMenu').classList.toggle('active');
+        }
+        
+        function toggleAccordion(element) {
+            const content = element.nextElementSibling;
+            const arrow = element.querySelector('span');
+            
+            content.classList.toggle('active');
+            arrow.textContent = content.classList.contains('active') ? '▲' : '▼';
+        }
+        
+        // Adiciona animação aos cards ao scroll
+        window.addEventListener('scroll', () => {
+            const cards = document.querySelectorAll('.card');
+            cards.forEach(card => {
+                const rect = card.getBoundingClientRect();
+                if (rect.top < window.innerHeight && rect.bottom > 0) {
+                    card.style.opacity = '1';
+                }
+            });
+        });
+        
+        // Fecha o menu mobile ao clicar fora
+        document.addEventListener('click', (e) => {
+            const nav = document.querySelector('nav');
+            const hamburger = document.querySelector('.hamburger');
+            if (!nav.contains(e.target) && !hamburger.contains(e.target)) {
+                document.getElementById('navMenu').classList.remove('active');
+            }
+        });
+    </script>
+</body>
+</html>
