@@ -1,0 +1,119 @@
+@import "tailwindcss";
+
+:root {
+  --background: #f5f5f5;
+  --foreground: #1f2937;
+
+  --primary: #1e3a8a;
+  --secondary: #3b82f6;
+  --accent: #10b981;
+  --danger: #ef4444;
+  --warning: #f59e0b;
+  --dark: #1f2937;
+  --light: #f3f4f6;
+  --white: #ffffff;
+
+  --pv-blue-900: #1e3a5f;
+  --pv-blue-700: #26476f;
+  --pv-yellow-500: #f2c94c;
+  --pv-green-600: #70b643;
+  --pv-gray-100: #f5f5f5;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+
+  --color-pv-blue-900: var(--pv-blue-900);
+  --color-pv-blue-700: var(--pv-blue-700);
+  --color-pv-yellow-500: var(--pv-yellow-500);
+  --color-pv-green-600: var(--pv-green-600);
+  --color-pv-gray-100: var(--pv-gray-100);
+
+  --color-primary: var(--primary);
+  --color-secondary: var(--secondary);
+  --color-accent: var(--accent);
+  --color-danger: var(--danger);
+  --color-warning: var(--warning);
+  --color-dark: var(--dark);
+  --color-light: var(--light);
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-poppins), system-ui, sans-serif;
+  line-height: 1.6;
+}
+
+.site-search-highlight {
+  background-color: #fff3a4;
+  color: inherit;
+  padding: 0 0.15em;
+  border-radius: 0.2rem;
+  box-shadow: 0 0 0 2px rgba(255, 235, 59, 0.35);
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes pulse {
+
+  0%,
+  100% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.02);
+  }
+}
+
+@keyframes float {
+
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.8s ease forwards;
+}
+
+.animate-slideIn {
+  animation: slideIn 0.5s ease forwards;
+}
+
+.animate-pulse-custom {
+  animation: pulse 2s infinite;
+}
+
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
